@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>Text Adventure — Day 1</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <style>
+    body { font-family: Arial, sans-serif; margin: 24px; }
+    #output { 
+      white-space: pre-wrap;
+      border: 1px solid #ccc;
+      padding: 12px;
+      height: 300px;
+      overflow-y: auto;
+      background: #fafafa;
+      margin-bottom: 12px;
+    }
+    #cmd {
+      width: 80%;
+      padding: 8px;
+      font-size: 1rem;
+    }
+    #enterBtn {
+      padding: 8px 14px;
+      font-size: 1rem;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Text Adventure — Prototype</h1>
+  <div id="output"></div>
+
+  <input id="cmd" placeholder="Type a command…" autocomplete="off" />
+  <button id="enterBtn">Enter</button>
+
+  <script>
+    const output = document.getElementById('output');
+    const cmd = document.getElementById('cmd');
+    const btn = document.getElementById('enterBtn');
+
+    function println(text) {
+      output.textContent += text + "\n";
+      output.scrollTop = output.scrollHeight;
+    }
+
+    function processCommand(command) {
+      println("> " + command);
+      println("You typed: " + command);
+    }
+
+    btn.addEventListener('click', () => {
+      const value = cmd.value.trim();
+      if (value) processCommand(value);
+      cmd.value = "";
+      cmd.focus();
+    });
+
+    cmd.addEventListener('keydown', (e) => {
+      if (e.key === "Enter") {
+        btn.click();
+      }
+    });
+
+    // Initial message
+    println("Welcome to your text adventure prototype!");
+  </script>
+
+</body>
+</html>
