@@ -1,167 +1,131 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Nick's Site</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Nick's Site</title>
 
-  <style>
-    /* --- GLOBAL STYLE --- */
+<style>
     body {
-      margin: 0;
-      padding: 40px;
-      background: linear-gradient(135deg, #89f7ff, #c4ff92);
-      font-family: Verdana, Tahoma, sans-serif;
-      color: #00404d;
-      min-height: 100vh;
+        margin: 0;
+        padding: 0;
+        font-family: "Comic Sans MS", "Comic Sans", cursive;
+        background: url("background.jpg") no-repeat center center fixed;
+        background-size: cover;
+        color: #ffffff;
+        text-align: center;
     }
 
-    /* --- MAIN CONTAINER --- */
-    .container {
-      background: rgba(255, 255, 255, 0.50);
-      backdrop-filter: blur(10px);
-      border-radius: 22px;
-      padding: 25px 30px;
-      max-width: 650px;
-      margin: auto;
-      box-shadow: 0 8px 25px rgba(0,0,0,0.22);
+    /* Glossy glass panel */
+    .panel {
+        margin: 40px auto;
+        padding: 20px;
+        width: 70%;
+        max-width: 700px;
+
+        background: rgba(255, 255, 255, 0.35);
+        backdrop-filter: blur(12px);
+
+        border-radius: 25px;
+        border: 2px solid rgba(255, 255, 255, 0.6);
+
+        box-shadow:
+            0 0 20px rgba(255, 255, 255, 0.35),
+            inset 0 0 12px rgba(255, 255, 255, 0.4);
     }
 
-    /* --- GLOSSY BANNER --- */
-    .banner {
-      background: linear-gradient(#ffffff, #b8ffe0);
-      padding: 20px;
-      border-radius: 18px;
-      text-align: center;
-      font-size: 28px;
-      font-weight: bold;
-      color: #00605f;
-      box-shadow: inset 0 2px 6px rgba(255,255,255,0.8),
-                  0 4px 12px rgba(0,0,0,0.25);
-      margin-bottom: 25px;
+    h1 {
+        font-size: 42px;
+        margin-top: 20px;
+        padding: 15px;
+        color: #dfffff;
+
+        text-shadow: 
+            0 0 6px #00ffff,
+            0 0 12px #00ffea;
     }
 
-    /* --- OUTPUT BOX --- */
-    #output {
-      background: rgba(255,255,255,0.65);
-      padding: 15px;
-      border-radius: 14px;
-      height: 260px;
-      overflow-y: auto;
-      white-space: pre-wrap;
-      box-shadow: inset 0 2px 6px rgba(255,255,255,0.9);
-    }
+    input {
+        width: 80%;
+        padding: 15px;
+        border-radius: 20px;
+        border: none;
+        outline: none;
 
-    /* --- INPUT + BUTTON AREA --- */
-    .input-area {
-      margin-top: 20px;
-      display: flex;
-      gap: 10px;
-    }
+        font-size: 18px;
+        font-family: "Comic Sans MS";
 
-    #input {
-      flex: 1;
-      padding: 10px;
-      border-radius: 12px;
-      border: none;
-      font-size: 16px;
-      outline: none;
-      box-shadow: inset 0 2px 5px rgba(0,0,0,0.25);
+        background: rgba(255,255,255,0.75);
+        box-shadow:
+            inset 0 0 8px rgba(0,0,0,0.3),
+            0 0 8px rgba(0,255,200,0.4);
     }
 
     button {
-      background: linear-gradient(#ffffff, #aaff99);
-      border: none;
-      padding: 10px 18px;
-      font-size: 16px;
-      border-radius: 12px;
-      cursor: pointer;
-      box-shadow: 0 3px 8px rgba(0,0,0,0.25);
-      color: #004d3d;
-      font-weight: bold;
+        margin-top: 15px;
+        padding: 12px 25px;
+        font-size: 18px;
+        border-radius: 20px;
+        border: none;
+        cursor: pointer;
+        font-family: "Comic Sans MS";
+
+        background: linear-gradient(to bottom, #59f7ff, #00b7c2);
+        color: #003b3b;
+
+        box-shadow:
+            0 0 10px #00ffff,
+            inset 0 0 6px rgba(255,255,255,0.8);
     }
 
-    button:hover {
-      background: linear-gradient(#ffffff, #c7ffb7);
-    }
-  </style>
+    #output {
+        margin-top: 20px;
+        font-size: 22px;
+        color: white;
 
+        text-shadow:
+            0 0 8px #00ffc8,
+            0 0 14px #00ffe9;
+    }
+</style>
 </head>
+
 <body>
 
-  <div class="container">
-    
-    <!-- Banner -->
-    <div class="banner">Welcome to Nick's Site!</div>
+    <h1>Welcome to Nick's Site!</h1>
 
-    <!-- Output Box -->
-    <div id="output"></div>
+    <div class="panel">
+        <p>Type something below and see how the site responds.</p>
 
-    <!-- Input -->
-    <div class="input-area">
-      <input id="input" type="text" placeholder="Type something..." autocomplete="off">
-      <button onclick="handleInput()">Send</button>
+        <input id="userInput" placeholder="Enter any text...">
+        <button onclick="respond()">Submit</button>
+
+        <p id="output"></p>
     </div>
 
-  </div>
-
 <script>
-  // --- SMALL RESPONSE BANK ---
-  const responses = {
-    "hello": "Hi there! :D",
-    "hi": "Hello!",
-    "hey": "Hey hey!",
-    "who are you": "I'm a glossy early-2000s web assistant!",
-    "what is this": "This is Nick's Site. Enjoy the aqua sunlight.",
-    "nick": "Yes? :P",
-    "how are you": "I'm shiny and aerodynamic today!",
-    "lol": "Glad I could amuse you!",
-    "help": "Try saying things like: hello, how are you, nick, hi, lol, etc."
-  };
+const responses = {
+    "hi": "Hello there!",
+    "hello": "Hi! Welcome!",
+    "nick": "The creator himself!",
+    "cool": "I know, right?",
+    "wow": "✨ WOW indeed ✨",
+    "y2k": "We love the early 2000s aesthetic here.",
+    "aero": "Frutiger Aero supremacy.",
+    "grass": "Touch it.",
+    "city": "Skyscrapers looking slick today.",
+    // You can add LOTS more here
+};
 
-  const output = document.getElementById("output");
-  const input = document.getElementById("input");
-
-  // --- PRINT FUNCTION (with small typing effect) ---
-  function printLine(text) {
-    const line = document.createElement("div");
-    output.appendChild(line);
-
-    let i = 0;
-    function type() {
-      if (i < text.length) {
-        line.textContent += text.charAt(i);
-        i++;
-        setTimeout(type, 10);
-      }
-      output.scrollTop = output.scrollHeight;
-    }
-    type();
-  }
-
-  // --- HANDLE USER INPUT ---
-  function handleInput() {
-    const userText = input.value.trim().toLowerCase();
-    if (userText === "") return;
-
-    printLine("> " + userText);
-    input.value = "";
-
-    if (responses[userText]) {
-      printLine(responses[userText]);
+function respond() {
+    const input = document.getElementById("userInput").value.toLowerCase();
+    
+    if (responses[input]) {
+        document.getElementById("output").innerText = responses[input];
     } else {
-      printLine("I don't recognize whatever you just said, nerd. :(");
+        document.getElementById("output").innerText = "Interesting...";
     }
-  }
-
-  // Press Enter to send
-  input.addEventListener("keydown", function(e) {
-    if (e.key === "Enter") {
-      handleInput();
-    }
-  });
-
-  // --- INITIAL MESSAGE ---
-  printLine("Welcome! Type something to begin.");
+}
 </script>
 
 </body>
