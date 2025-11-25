@@ -1,121 +1,111 @@
-<!doctype html>
-<html lang="en">
+<!DOCTYPE html>
+<html>
 <head>
-  <meta charset="utf-8" />
-  <title>Text Adventure — Terminal Edition</title>
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta charset="UTF-8">
+  <title>Nick's Site</title>
 
   <style>
-    /* Classic Terminal Look */
+    /* --- GLOBAL STYLE --- */
     body {
-      background-color: #001900; /* nearly black green */
-      color: #00ff66;            /* bright green text */
-      font-family: "Consolas", "Courier New", monospace;
       margin: 0;
+      padding: 40px;
+      background: linear-gradient(135deg, #89f7ff, #c4ff92);
+      font-family: Verdana, Tahoma, sans-serif;
+      color: #00404d;
+      min-height: 100vh;
+    }
+
+    /* --- MAIN CONTAINER --- */
+    .container {
+      background: rgba(255, 255, 255, 0.50);
+      backdrop-filter: blur(10px);
+      border-radius: 22px;
+      padding: 25px 30px;
+      max-width: 650px;
+      margin: auto;
+      box-shadow: 0 8px 25px rgba(0,0,0,0.22);
+    }
+
+    /* --- GLOSSY BANNER --- */
+    .banner {
+      background: linear-gradient(#ffffff, #b8ffe0);
       padding: 20px;
+      border-radius: 18px;
+      text-align: center;
+      font-size: 28px;
+      font-weight: bold;
+      color: #00605f;
+      box-shadow: inset 0 2px 6px rgba(255,255,255,0.8),
+                  0 4px 12px rgba(0,0,0,0.25);
+      margin-bottom: 25px;
     }
 
-    h1 {
-      margin-top: 0;
-      font-weight: normal;
-      color: #00ff66;
-    }
-
+    /* --- OUTPUT BOX --- */
     #output {
-      white-space: pre-wrap;
-      border: 2px solid #003300;
-      background-color: #000f00;
+      background: rgba(255,255,255,0.65);
       padding: 15px;
-      height: 350px;
+      border-radius: 14px;
+      height: 260px;
       overflow-y: auto;
-      box-shadow: 0 0 10px #003300;
-      margin-bottom: 12px;
+      white-space: pre-wrap;
+      box-shadow: inset 0 2px 6px rgba(255,255,255,0.9);
     }
 
-    #cmd {
-      width: 80%;
+    /* --- INPUT + BUTTON AREA --- */
+    .input-area {
+      margin-top: 20px;
+      display: flex;
+      gap: 10px;
+    }
+
+    #input {
+      flex: 1;
       padding: 10px;
-      background-color: #000f00;
-      color: #00ff66;
-      border: 2px solid #003300;
-      font-family: inherit;
-      font-size: 1rem;
+      border-radius: 12px;
+      border: none;
+      font-size: 16px;
       outline: none;
+      box-shadow: inset 0 2px 5px rgba(0,0,0,0.25);
     }
 
     button {
-      padding: 10px 14px;
-      background-color: #001900;
-      color: #00ff66;
-      border: 2px solid #003300;
-      font-family: inherit;
+      background: linear-gradient(#ffffff, #aaff99);
+      border: none;
+      padding: 10px 18px;
+      font-size: 16px;
+      border-radius: 12px;
       cursor: pointer;
+      box-shadow: 0 3px 8px rgba(0,0,0,0.25);
+      color: #004d3d;
+      font-weight: bold;
     }
 
     button:hover {
-      background-color: #003300;
+      background: linear-gradient(#ffffff, #c7ffb7);
     }
   </style>
 
 </head>
 <body>
 
-  <h1>TEXT ADVENTURE TERMINAL</h1>
-  <div id="output"></div>
+  <div class="container">
+    
+    <!-- Banner -->
+    <div class="banner">Welcome to Nick's Site!</div>
 
-  <input id="cmd" placeholder="Type a command…" autocomplete="off" />
-  <button id="enterBtn">Enter</button>
+    <!-- Output Box -->
+    <div id="output"></div>
 
-  <script>
-    const output = document.getElementById("output");
-    const cmd = document.getElementById("cmd");
-    const btn = document.getElementById("enterBtn");
+    <!-- Input -->
+    <div class="input-area">
+      <input id="input" type="text" placeholder="Type something..." autocomplete="off">
+      <button onclick="handleInput()">Send</button>
+    </div>
 
-    /* Write text to output window */
-    function println(text = "") {
-      output.textContent += text + "\n";
-      output.scrollTop = output.scrollHeight;
-    }
+  </div>
 
-    /* Main command handler */
-    function processCommand(command) {
-      println("> " + command);
+<script>
+  // --- SMALL RESPONSE BANK ---
+  const responses = {
+    "hello": "Hi there! :D",
 
-      const cleaned = command.trim().toLowerCase();
-
-      if (cleaned === "help") {
-        println("Available commands: look, help, clear");
-        return;
-      }
-
-      if (cleaned === "clear") {
-        output.textContent = "";
-        return;
-      }
-
-      if (cleaned === "look") {
-        println("You see darkness. The world has not been created yet.");
-        return;
-      }
-
-      println("Unknown command. Type 'help' for options.");
-    }
-
-    btn.addEventListener("click", () => {
-      const value = cmd.value.trim();
-      if (value) processCommand(value);
-      cmd.value = "";
-      cmd.focus();
-    });
-
-    cmd.addEventListener("keydown", e => {
-      if (e.key === "Enter") btn.click();
-    });
-
-    /* Initial message */
-    println("Welcome to your retro-style text adventure.");
-    println("Type 'help' for a list of commands.");
-  </script>
-
-</body>
-</html>
