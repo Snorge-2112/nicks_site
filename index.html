@@ -108,4 +108,61 @@
   // --- SMALL RESPONSE BANK ---
   const responses = {
     "hello": "Hi there! :D",
+    "hi": "Hello!",
+    "hey": "Hey hey!",
+    "who are you": "I'm a glossy early-2000s web assistant!",
+    "what is this": "This is Nick's Site. Enjoy the aqua sunlight.",
+    "nick": "Yes? :P",
+    "how are you": "I'm shiny and aerodynamic today!",
+    "lol": "Glad I could amuse you!",
+    "help": "Try saying things like: hello, how are you, nick, hi, lol, etc."
+  };
 
+  const output = document.getElementById("output");
+  const input = document.getElementById("input");
+
+  // --- PRINT FUNCTION (with small typing effect) ---
+  function printLine(text) {
+    const line = document.createElement("div");
+    output.appendChild(line);
+
+    let i = 0;
+    function type() {
+      if (i < text.length) {
+        line.textContent += text.charAt(i);
+        i++;
+        setTimeout(type, 10);
+      }
+      output.scrollTop = output.scrollHeight;
+    }
+    type();
+  }
+
+  // --- HANDLE USER INPUT ---
+  function handleInput() {
+    const userText = input.value.trim().toLowerCase();
+    if (userText === "") return;
+
+    printLine("> " + userText);
+    input.value = "";
+
+    if (responses[userText]) {
+      printLine(responses[userText]);
+    } else {
+      printLine("I don't recognize whatever you just said, nerd. :(");
+    }
+  }
+
+  // Press Enter to send
+  input.addEventListener("keydown", function(e) {
+    if (e.key === "Enter") {
+      handleInput();
+    }
+  });
+
+  // --- INITIAL MESSAGE ---
+  printLine("Welcome! Type something to begin.");
+</script>
+
+</body>
+</html>
